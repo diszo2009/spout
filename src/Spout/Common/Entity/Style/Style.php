@@ -66,11 +66,6 @@ class Style
     /** @var bool Whether the wrap text property was set */
     private $hasSetWrapText = false;
 
-    /** @var bool Whether the cell should shrink to fit to content */
-    private $shouldShrinkToFit = false;
-    /** @var bool Whether the shouldShrinkToFit text property was set */
-    private $hasSetShrinkToFit = false;
-
     /** @var Border */
     private $border;
 
@@ -88,6 +83,12 @@ class Style
 
     /** @var bool */
     private $hasSetFormat = false;
+
+    /** @var bool */
+    private $isRegistered = false;
+
+    /** @var bool */
+    private $isEmpty = true;
 
     /**
      * @return int|null
@@ -124,6 +125,7 @@ class Style
     {
         $this->shouldApplyBorder = true;
         $this->border = $border;
+        $this->isEmpty = false;
 
         return $this;
     }
@@ -152,6 +154,7 @@ class Style
         $this->fontBold = true;
         $this->hasSetFontBold = true;
         $this->shouldApplyFont = true;
+        $this->isEmpty = false;
 
         return $this;
     }
@@ -180,6 +183,7 @@ class Style
         $this->fontItalic = true;
         $this->hasSetFontItalic = true;
         $this->shouldApplyFont = true;
+        $this->isEmpty = false;
 
         return $this;
     }
@@ -208,6 +212,7 @@ class Style
         $this->fontUnderline = true;
         $this->hasSetFontUnderline = true;
         $this->shouldApplyFont = true;
+        $this->isEmpty = false;
 
         return $this;
     }
@@ -236,6 +241,7 @@ class Style
         $this->fontStrikethrough = true;
         $this->hasSetFontStrikethrough = true;
         $this->shouldApplyFont = true;
+        $this->isEmpty = false;
 
         return $this;
     }
@@ -265,6 +271,7 @@ class Style
         $this->fontSize = $fontSize;
         $this->hasSetFontSize = true;
         $this->shouldApplyFont = true;
+        $this->isEmpty = false;
 
         return $this;
     }
@@ -296,6 +303,7 @@ class Style
         $this->fontColor = $fontColor;
         $this->hasSetFontColor = true;
         $this->shouldApplyFont = true;
+        $this->isEmpty = false;
 
         return $this;
     }
@@ -325,6 +333,7 @@ class Style
         $this->fontName = $fontName;
         $this->hasSetFontName = true;
         $this->shouldApplyFont = true;
+        $this->isEmpty = false;
 
         return $this;
     }
@@ -355,6 +364,7 @@ class Style
         $this->cellAlignment = $cellAlignment;
         $this->hasSetCellAlignment = true;
         $this->shouldApplyCellAlignment = true;
+        $this->isEmpty = false;
 
         return $this;
     }
@@ -391,6 +401,7 @@ class Style
     {
         $this->shouldWrapText = $shouldWrap;
         $this->hasSetWrapText = true;
+        $this->isEmpty = false;
 
         return $this;
     }
@@ -420,6 +431,7 @@ class Style
     {
         $this->hasSetBackgroundColor = true;
         $this->backgroundColor = $color;
+        $this->isEmpty = false;
 
         return $this;
     }
@@ -449,6 +461,7 @@ class Style
     {
         $this->hasSetFormat = true;
         $this->format = $format;
+        $this->isEmpty = false;
 
         return $this;
     }
@@ -470,31 +483,27 @@ class Style
     }
 
     /**
-     * Sets should shrink to fit
-     * @param bool $shrinkToFit
-     * @return Style
-     */
-    public function setShouldShrinkToFit($shrinkToFit = true)
-    {
-        $this->hasSetShrinkToFit = true;
-        $this->shouldShrinkToFit = $shrinkToFit;
-
-        return $this;
-    }
-
-    /**
-     * @return bool Whether format should be applied
-     */
-    public function shouldShrinkToFit()
-    {
-        return $this->shouldShrinkToFit;
-    }
-
-    /**
      * @return bool
      */
-    public function hasSetShrinkToFit()
+    public function isRegistered() : bool
     {
-        return $this->hasSetShrinkToFit;
+        return $this->isRegistered;
+    }
+
+    public function markAsRegistered(?int $id) : void
+    {
+        $this->setId($id);
+        $this->isRegistered = true;
+    }
+
+    public function unmarkAsRegistered() : void
+    {
+        $this->setId(0);
+        $this->isRegistered = false;
+    }
+
+    public function isEmpty() : bool
+    {
+        return $this->isEmpty;
     }
 }

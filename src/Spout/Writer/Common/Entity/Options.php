@@ -20,10 +20,4 @@ abstract class Options
 
     // XLSX specific options
     const SHOULD_USE_INLINE_STRINGS = 'shouldUseInlineStrings';
-
-    // XLSX column widths
-    const COLUMN_WIDTHS = 'columnWidths';
-
-    // XLSX merge cells
-    const MERGE_CELLS = 'mergeCells';
 }
